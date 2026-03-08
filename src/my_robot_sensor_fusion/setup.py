@@ -24,8 +24,8 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            "1tof_test = my_robot_sensor_fusion.test.1tof_test:main",
-            "3tof_test = my_robot_sensor_fusion.test.3tof_test:main",
+            'tof1_test = my_robot_sensor_fusion.tof1_test:main'
+            'tof3_test = my_robot_sensor_fusion.tof3_test:main'
         ],
     },
 )
