@@ -5,7 +5,7 @@ from std_msgs.msg import Int32
 
 import time
 import RPi.GPIO as GPIO
-from adafruit_vl53l0x  import VL53L0X  # from Gadgetoid/VL53L0X-python [web:10]
+import VL53L0X
 
 # UPDATE THIS: GPIO connected to the single sensor's XSHUT pin
 XSHUT_PIN = 11         # BCM numbering
@@ -31,7 +31,7 @@ class VL53L0XSingleNode(Node):
 
         # Initialize sensor
         try:
-            self.sensor = VL53L0X(address=SENSOR_I2C_ADDR)
+            self.sensor = VL53L0X.VL53L0X(address=SENSOR_I2C_ADDR)
             self.sensor.start_ranging(VL53L0X.BEST_ACCURACY_MODE)
             self.get_logger().info('VL53L0X single sensor initialized')
         except Exception as e:
