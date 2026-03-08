@@ -8,7 +8,7 @@ import RPi.GPIO as GPIO
 from adafruit_vl53l0x  import VL53L0X  # from Gadgetoid/VL53L0X-python [web:10]
 
 # UPDATE THIS: GPIO connected to the single sensor's XSHUT pin
-XSHUT_PIN = 17          # BCM numbering
+XSHUT_PIN = 11         # BCM numbering
 SENSOR_I2C_ADDR = 0x29  # default address; no need to change for 1 sensor
 
 class VL53L0XSingleNode(Node):
