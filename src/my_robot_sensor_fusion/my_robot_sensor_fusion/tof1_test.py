@@ -2,17 +2,21 @@
 import rclpy
 from rclpy.node import Node
 from std_msgs.msg import Int32
-
+import board
+import busio
 import time
 import RPi.GPIO as GPIO
 from adafruit_vl53l0x  import VL53L0X  # from Gadgetoid/VL53L0X-python [web:10]
 
+i2c = busio.I2C(board.SCL, board.SDA)
+sensor = adafruit_vl53l0x.VL53L0X(i2c)  # Initialize sensor on default I2C address
 # UPDATE THIS: GPIO connected to the single sensor's XSHUT pin
 XSHUT_PIN = 11         # BCM numbering
 SENSOR_I2C_ADDR = 0x29  # default address; no need to change for 1 sensor
 
 class VL53L0XSingleNode(Node):
     def __init__(self):
+        self.sensor = VL53L0X(i2c, address=SENSOR_I2C_ADDR)  # Initialize sensor
         super().__init__('vl53l0x_single_node')
         self.publisher_ = self.create_publisher(Int32, 'vl53l0x/range', 10)
         timer_period = 0.1  # seconds
@@ -38,20 +42,21 @@ class VL53L0XSingleNode(Node):
             self.get_logger().error(f'Failed to init VL53L0X: {e}')
             self.sensor = None
 
-    def timer_callback(self):
-        if self.sensor is None:
-            return
+   def timer_callback(self):
+    if self.sensor is None:
+        return
+    
+    try:
+        distance_mm = self.sensor.range  # This goes HERE - Adafruit driver property [web:1][web:5]
+    except Exception as e:
+        self.get_logger().error(f'Read error: {e}')
+        return
+    
+    msg = Int32()
+    msg.data = int(distance_mm)
+    self.publisher_.publish(msg)
+    self.get_logger().info(f'Distance: {distance_mm} mm')
 
-        try:
-            distance_mm = self.sensor.get_distance()
-        except Exception as e:
-            self.get_logger().error(f'Read error: {e}')
-            return
-
-        msg = Int32()
-        msg.data = int(distance_mm)
-        self.publisher_.publish(msg)
-        self.get_logger().info(f'Distance: {distance_mm} mm')
 
     def destroy_node(self):
         if getattr(self, 'sensor', None) is not None:
