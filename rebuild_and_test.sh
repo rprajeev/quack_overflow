@@ -1,10 +1,11 @@
 #!/bin/bash
-
+# might have to run chmod +x rebuild_and_test.sh
+# then just run ./rebuild_and_test.sh
 set -e
 
 WORKSPACE=~/quack_overflow
-PACKAGE=my_robot_sensor_fusion
-NODE=tof1_test
+PACKAGE=my_robot_lidar_sensing
+NODE=lidar_test
 
 echo "---- Enter workspace ----"
 cd $WORKSPACE
