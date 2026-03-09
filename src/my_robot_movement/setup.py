@@ -22,6 +22,7 @@ setup(
     entry_points={
         'console_scripts': [
             'test_node = my_robot_movement.test_node:main',
+            'navigation_node = my_robot_movement.navigation:main'
         ],
     },
 )
