@@ -9,7 +9,7 @@ class SerialLidarTest(Node):
         super().__init__('serial_lidar_test')
 
         # CHANGE THIS if your device is different
-        port = '/dev/ttyUSB0'
+        port = '/dev/serial0'  # common for Raspberry Pi; could be /dev/ttyUSB0 or similar on other systems
         baud = 115200  # common start value; we can try others later
 
         self.get_logger().info(f'Trying to open {port} at {baud} baud...')
