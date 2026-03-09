@@ -1,5 +1,6 @@
 #!/bin/bash
-
+# might have to run chmod +x rebuild_and_test.sh
+# then just run ./rebuild_and_test.sh
 set -e
 
 WORKSPACE=~/quack_overflow
