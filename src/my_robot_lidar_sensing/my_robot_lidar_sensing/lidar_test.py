@@ -3,7 +3,7 @@ import rclpy
 from rclpy.node import Node
 import serial
 import time
-
+# demo change
 class SerialLidarTest(Node):
     def __init__(self):
         super().__init__('serial_lidar_test')
